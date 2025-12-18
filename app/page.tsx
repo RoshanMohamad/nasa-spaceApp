@@ -16,7 +16,10 @@ import { RealisticModeToggle } from "@/components/realistic-mode-toggle"
 import { type ScaleMode, type TimeScale, TIME_SCALES } from "@/lib/realistic-mode"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Rocket, Settings, Info, AlertTriangle, Target, ExternalLink, ChevronLeft, ChevronRight, PanelLeftClose, PanelRightClose } from "lucide-react"
+import { Rocket, Settings, Info, AlertTriangle, Target, ExternalLink, ChevronLeft, ChevronRight, PanelLeftClose, PanelRightClose, HelpCircle, Sparkles } from "lucide-react"
+import { FeatureHub } from "@/components/FeatureHub"
+import { QuickActionsPanel } from "@/components/QuickActionsPanel"
+import { OnboardingTour } from "@/components/OnboardingTour"
 import { useRouter } from "next/navigation"
 import { calculateImpact, type ImpactResults } from "@/lib/impact-calculator"
 import { calculateImpactProbability, type CelestialBody, type ImpactAnalysis } from "@/lib/orbital-mechanics"
@@ -47,9 +50,7 @@ export default function HomePage() {
   const [customAsteroids, setCustomAsteroids] = useState<CustomAsteroid[]>([])
   const [isImpactAnalysisOpen, setIsImpactAnalysisOpen] = useState(false)
   
-  // Panel visibility toggles
-  const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true)
-  const [isRightPanelVisible, setIsRightPanelVisible] = useState(true)
+  // Panel visibility toggles - Now using unified sidebar
   const [isImpactVisualizationOpen, setIsImpactVisualizationOpen] = useState(false)
   const [isAdvancedImpactOpen, setIsAdvancedImpactOpen] = useState(false)
   const [isObjectDetailsOpen, setIsObjectDetailsOpen] = useState(false)
@@ -259,6 +260,46 @@ export default function HomePage() {
       setIsImpactVisualizationOpen(true)
     }
   }, [selectedImpactAnalysis])
+  
+  const handleFeatureSelect = useCallback((feature: string) => {
+    setShowFeatureHub(false)
+    
+    // Handle different feature selections
+    switch(feature) {
+      case 'impact-simulator':
+        setIsLeftPanelVisible(true)
+        break
+      case 'map-impact':
+        router.push('/map-impact')
+        break
+      case 'nasa-asteroids':
+        setIsLeftPanelVisible(true)
+        // Auto-focus on Custom tab
+        break
+      case 'realistic-mode':
+        setIsRightPanelVisible(true)
+        break
+      // Add more cases as needed
+    }
+  }, [router])
+  
+  const handleLoadPreset = useCallback((preset: string) => {
+    // Load preset configuration
+    const presets: any = {
+      chelyabinsk: { diameter: 0.02, velocity: 19, angle: 20 },
+      tunguska: { diameter: 0.06, velocity: 15, angle: 30 },
+      barringer: { diameter: 0.05, velocity: 12.8, angle: 45 },
+      chicxulub: { diameter: 10, velocity: 20, angle: 60 },
+      apophis: { diameter: 0.37, velocity: 12.6, angle: 45 }
+    }
+    
+    const config = presets[preset]
+    if (config) {
+      setAsteroidSize(config.diameter)
+      setAsteroidSpeed(config.velocity)
+      setAsteroidAngle(config.angle)
+    }
+  }, [])
 
   const previewImpact = calculateImpact({
     diameter: asteroidSize,
@@ -290,7 +331,7 @@ export default function HomePage() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Rocket className="w-6 h-6 text-primary" />
+              <AnimatedLogo className="w-6 h-6 text-primary" />
               <h1 className="text-2xl font-bold text-foreground">Solar System & Asteroid Impact Simulator</h1>
             </div>
             <nav className="flex items-center gap-2">
@@ -338,7 +379,19 @@ export default function HomePage() {
           }`}
         >
           <div className="w-[420px] space-y-4">
-            {/* Asteroid Control Panel */}
+            {/* Quick Actions Panel */}
+            <QuickActionsPanel
+              simulationActive={simulationActive}
+              isPaused={isPaused}
+              onStartSimulation={handleStartSimulation}
+              onPauseToggle={handlePauseToggle}
+              onReset={handleReset}
+              onLoadPreset={handleLoadPreset}
+              onLoadNASA={() => handleAddRealAsteroid('apophis')}
+              onOpenMapImpact={() => router.push('/map-impact')}
+              onToggleFeatureHub={() => setShowFeatureHub(true)}
+              onToggleSettings={() => setIsRightPanelVisible(prev => !prev)}
+            />            {/* Asteroid Control Panel */}
             <AsteroidControlPanel
               customAsteroids={customAsteroids}
               onAddAsteroid={handleAddAsteroid}
@@ -543,12 +596,8 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Stats Panel */}
-        <div 
-          className={`absolute bottom-6 right-6 z-10 transition-transform duration-300 ${
-            isRightPanelVisible ? 'translate-x-0' : 'translate-x-[440px]'
-          }`}
-        >
+        {/* Stats Panel - Moved to bottom right */}
+        <div className="absolute bottom-6 right-6 z-10">
           <Card className="p-4 bg-card/90 backdrop-blur-sm border-border/50">
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-2">
@@ -574,32 +623,6 @@ export default function HomePage() {
             </div>
           </Card>
         </div>
-
-        {/* Right Panel Toggle Button */}
-        <Button
-          onClick={() => setIsRightPanelVisible(!isRightPanelVisible)}
-          size="icon"
-          variant="outline"
-          className={`absolute bottom-6 z-20 transition-all duration-300 bg-black/60 backdrop-blur-md border-purple-500/30 hover:bg-purple-500/20 ${
-            isRightPanelVisible ? 'right-[452px]' : 'right-6'
-          }`}
-          title={isRightPanelVisible ? "Hide Info Panel" : "Show Info Panel"}
-        >
-          {isRightPanelVisible ? (
-            <ChevronRight className="w-4 h-4 text-purple-300" />
-          ) : (
-            <ChevronLeft className="w-4 h-4 text-purple-300" />
-          )}
-        </Button>
-
-        {/* Orbit Path Comparison Viewer */}
-        <OrbitPathViewer
-          customObjects={customObjects}
-          onFocusObject={(object) => {
-            // Focus camera on object in 3D view
-            console.log('Focus on:', object.name)
-          }}
-        />
       </main>
 
       {/* NASA Loading Indicator */}

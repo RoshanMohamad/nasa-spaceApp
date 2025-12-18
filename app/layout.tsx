@@ -7,20 +7,27 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "🌍 NASA GeoViewer",
+  title: "NASA GeoViewer - Solar System & Asteroid Impact Simulator",
   description: "Advanced Earth visualization platform for NASA Space Competition 2025",
   generator: "v0.app",
+  icons: {
+    icon: [
+      { url: '/favicon-earth.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'full' }
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
-    title: "🌍 NASA GeoViewer",
+    title: " NASA GeoViewer",
     description: "Advanced Earth visualization platform for NASA Space Competition 2025",
     url: "https://v0.app",
-    siteName: "🌍 NASA GeoViewer",
+    siteName: "NASA GeoViewer",
     images: [
       {
-        url: "/og-image.png",
+        url: "",
         width: 1200,
         height: 630,
-        alt: "🌍 NASA GeoViewer",
+        alt: "NASA GeoViewer",
       },
     ],
   },
