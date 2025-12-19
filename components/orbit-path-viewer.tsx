@@ -1,8 +1,7 @@
 "use client"
 
-import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { X, Eye, EyeOff, Orbit } from "lucide-react"
+import { Eye, EyeOff, Orbit } from "lucide-react"
 import { useState } from "react"
 import type { CelestialBody } from "@/lib/orbital-mechanics"
 
@@ -20,7 +19,6 @@ export function OrbitPathViewer({
   const [visibleOrbits, setVisibleOrbits] = useState<Set<string>>(
     new Set(customObjects.map(obj => obj.id))
   )
-  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const toggleOrbitVisibility = (objectId: string) => {
     const newVisible = new Set(visibleOrbits)
@@ -65,40 +63,10 @@ export function OrbitPathViewer({
     return { warning: false, message: "✓ Safe distance" }
   }
 
-  if (isCollapsed) {
-    return (
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setIsCollapsed(false)}
-        className="fixed bottom-4 right-4 z-20"
-      >
-        <Orbit className="w-4 h-4 mr-2" />
-        Show Orbit Comparison
-      </Button>
-    )
-  }
-
   return (
-    <Card className="fixed bottom-4 right-4 z-20 w-96 max-h-[600px] overflow-y-auto bg-card/95 backdrop-blur-sm border-border/50">
-      <div className="p-4 border-b border-border flex items-center justify-between sticky top-0 bg-card/95 backdrop-blur-sm">
-        <h3 className="font-semibold flex items-center gap-2">
-          <Orbit className="w-5 h-5 text-primary" />
-          Orbit Path Comparison
-        </h3>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setIsCollapsed(true)}
-          className="h-8 w-8"
-        >
-          <X className="w-4 h-4" />
-        </Button>
-      </div>
-
-      <div className="p-4 space-y-4">
-        {/* Solar System Reference */}
-        <div>
+    <div className="space-y-3">
+      {/* Solar System Reference */}
+      <div>
           <h4 className="text-xs font-semibold text-muted-foreground mb-2 uppercase">
             Solar System Planets
           </h4>
@@ -253,13 +221,12 @@ export function OrbitPathViewer({
         )}
 
         {customObjects.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground text-sm">
-            <Orbit className="w-12 h-12 mx-auto mb-2 opacity-50" />
+          <div className="text-center py-6 text-muted-foreground text-sm">
+            <Orbit className="w-10 h-10 mx-auto mb-2 opacity-50" />
             <p>No custom objects added yet.</p>
             <p className="text-xs mt-1">Create objects to compare their orbits!</p>
           </div>
         )}
-      </div>
-    </Card>
+    </div>
   )
 }
