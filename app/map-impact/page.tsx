@@ -4,8 +4,11 @@ import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Map } from "lucide-react"
+<<<<<<< HEAD
 
 // Import ImpactSandbox with SSR disabled (Leaflet needs browser)
+=======
+>>>>>>> a5e69b2bc15a91393ccbaa30b0bfe717e4b9b0d1
 export default function MapImpactPage() {
   const router = useRouter()
 
@@ -39,6 +42,8 @@ export default function MapImpactPage() {
       </div>
 
       {/* Main Content */}
+      {/* <div className="max-w-[2000px] mx-auto p-4">
+        <div className="mb-4">
       <div className="max-w-[2000px] mx-auto p-4">
         <div className="mb-4">
           <div className="bg-blue-950/30 border border-blue-500/30 rounded-lg p-4">
@@ -53,7 +58,15 @@ export default function MapImpactPage() {
             </ul>
           </div>
 
+<<<<<<< HEAD
 
+=======
+        </div> 
+      </div> */}
+        </div> */}
+        {/* Impact Sandbox Component */}
+        <ImpactSandbox />
+>>>>>>> a5e69b2bc15a91393ccbaa30b0bfe717e4b9b0d1
       </div>
     </div>
     </div>

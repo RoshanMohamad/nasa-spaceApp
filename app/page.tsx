@@ -70,6 +70,10 @@ export default function HomePage() {
   // Realistic Mode State
   const [scaleMode, setScaleMode] = useState<ScaleMode>('visual')
   const [timeScale, setTimeScale] = useState<TimeScale>('veryFast')
+  
+  // UI State
+  const [showFeatureHub, setShowFeatureHub] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(false)
 
   // Update simulation time based on speed
   useEffect(() => {
@@ -335,6 +339,22 @@ export default function HomePage() {
               <h1 className="text-2xl font-bold text-foreground">Solar System & Asteroid Impact Simulator</h1>
             </div>
             <nav className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setShowFeatureHub(true)}
+              >
+                <Sparkles className="w-4 h-4 mr-2" />
+                All Features
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setShowOnboarding(true)}
+              >
+                <HelpCircle className="w-4 h-4 mr-2" />
+                Help
+              </Button>
               <Button variant="ghost" size="sm">
                 <Info className="w-4 h-4 mr-2" />
                 About
@@ -698,6 +718,29 @@ export default function HomePage() {
           }}
         />
       )}
+      
+      {/* Feature Hub Modal */}
+      {showFeatureHub && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="max-w-5xl w-full">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 text-white hover:text-primary"
+              onClick={() => setShowFeatureHub(false)}
+            >
+              ✕
+            </Button>
+            <FeatureHub onFeatureSelect={handleFeatureSelect} />
+          </div>
+        </div>
+      )}
+      
+      {/* Onboarding Tour */}
+      <OnboardingTour
+        onComplete={() => setShowOnboarding(false)}
+        onSkip={() => setShowOnboarding(false)}
+      />
     </div>
   )
 }
