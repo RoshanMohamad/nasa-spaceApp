@@ -4,10 +4,6 @@ import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Map } from "lucide-react"
-
-// Import ImpactSandbox with SSR disabled (Leaflet needs browser)
-const ImpactSandbox = dynamic(() => import("@/components/ImpactSandbox"), { ssr: false })
-
 export default function MapImpactPage() {
   const router = useRouter()
 
@@ -41,6 +37,8 @@ export default function MapImpactPage() {
       </div>
 
       {/* Main Content */}
+      {/* <div className="max-w-[2000px] mx-auto p-4">
+        <div className="mb-4">
       <div className="max-w-[2000px] mx-auto p-4">
         {/* <div className="mb-4">
           <div className="bg-blue-950/30 border border-blue-500/30 rounded-lg p-4">
@@ -54,8 +52,10 @@ export default function MapImpactPage() {
               <li>4. Colored circles show thermal, airblast, and crater radii</li>
             </ul>
           </div>
-        </div> */}
 
+        </div> 
+      </div> */}
+        </div> */}
         {/* Impact Sandbox Component */}
         <ImpactSandbox />
       </div>
