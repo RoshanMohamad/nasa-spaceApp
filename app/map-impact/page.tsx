@@ -4,6 +4,17 @@ import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Map } from "lucide-react"
+
+// Import ImpactSandbox with SSR disabled (Leaflet needs browser)
+const ImpactSandbox = dynamic(() => import("@/components/ImpactSandbox"), { 
+  ssr: false,
+  loading: () => (
+    <div className="h-[600px] w-full bg-blue-950/20 animate-pulse rounded-lg flex items-center justify-center text-blue-300">
+      Loading Impact Simulator...
+    </div>
+  )
+})
+
 export default function MapImpactPage() {
   const router = useRouter()
 
@@ -37,25 +48,19 @@ export default function MapImpactPage() {
       </div>
 
       {/* Main Content */}
-      {/* <div className="max-w-[2000px] mx-auto p-4">
-        <div className="mb-4">
-      <div className="max-w-[2000px] mx-auto p-4">
-        {/* <div className="mb-4">
-          <div className="bg-blue-950/30 border border-blue-500/30 rounded-lg p-4">
-            <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-              🎯 How to Use
-            </h2>
-            <ul className="text-sm text-blue-200 space-y-1">
-              <li>1. Click anywhere on the map to set an impact location</li>
-              <li>2. Adjust asteroid parameters (diameter, velocity, angle, composition) on the right</li>
-              <li>3. See real-time impact results including crater size and damage zones</li>
-              <li>4. Colored circles show thermal, airblast, and crater radii</li>
-            </ul>
-          </div>
+      <div className="max-w-[2000px] mx-auto p-4 space-y-4">
+        <div className="bg-blue-950/30 border border-blue-500/30 rounded-lg p-4">
+          <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+            🎯 How to Use
+          </h2>
+          <ul className="text-sm text-blue-200 space-y-1">
+            <li>1. Click anywhere on the map to set an impact location</li>
+            <li>2. Adjust asteroid parameters (diameter, velocity, angle, composition) on the right</li>
+            <li>3. See real-time impact results including crater size and damage zones</li>
+            <li>4. Colored circles show thermal, airblast, and crater radii</li>
+          </ul>
+        </div>
 
-        </div> 
-      </div> */}
-        </div> */}
         {/* Impact Sandbox Component */}
         <ImpactSandbox />
       </div>
