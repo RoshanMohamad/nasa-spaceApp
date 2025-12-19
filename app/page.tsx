@@ -25,6 +25,8 @@ import { calculateImpact, type ImpactResults } from "@/lib/impact-calculator"
 import { calculateImpactProbability, type CelestialBody, type ImpactAnalysis } from "@/lib/orbital-mechanics"
 import { generateRandomAsteroid, type CustomAsteroid } from "@/lib/asteroid-system"
 import type * as THREE from "three"
+import { AnimatedLogo } from "@/components/app-logo"
+
 
 export default function HomePage() {
   const router = useRouter()
@@ -74,6 +76,9 @@ export default function HomePage() {
   // UI State
   const [showFeatureHub, setShowFeatureHub] = useState(false)
   const [showOnboarding, setShowOnboarding] = useState(false)
+  const [isLeftPanelVisible, setIsLeftPanelVisible] = useState(true)
+  const [isRightPanelVisible, setIsRightPanelVisible] = useState(true)
+
 
   // Update simulation time based on speed
   useEffect(() => {

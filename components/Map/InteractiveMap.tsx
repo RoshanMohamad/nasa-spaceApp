@@ -6,18 +6,12 @@ import 'leaflet/dist/leaflet.css';
 import { ImpactZone } from '@/types/impact.types';
 
 // Fix for default marker icons in React
-<<<<<<< HEAD
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
-=======
-import 'leaflet-defaulticon-compatibility';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
->>>>>>> a5e69b2bc15a91393ccbaa30b0bfe717e4b9b0d1
-
 interface InteractiveMapProps {
   impactLocation: { lat: number; lng: number } | null;
   impactZones: ImpactZone[];
