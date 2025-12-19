@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 export interface ImpactZone {
     lat: number;
     lng: number;
     radius: number;
     color: string;
     label: string;
-=======
+  }
 export interface MeteorParameters {
   diameter: number; // meters
   velocity: number; // km/s
@@ -38,5 +37,4 @@ export interface PresetScenario {
   name: string;
   description: string;
   parameters: Omit<MeteorParameters, 'location'>;
->>>>>>> a5e69b2bc15a91393ccbaa30b0bfe717e4b9b0d1
 }

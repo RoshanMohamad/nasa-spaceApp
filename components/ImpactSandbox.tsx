@@ -4,7 +4,7 @@ import { useState } from 'react'
 import InteractiveMap from '@/components/Map/InteractiveMap'
 import ResultsPanel from '@/components/ui/ResultsPanel'
 import { calculateImpact, type AsteroidData as CalcAsteroidData, type ImpactResults as CalcImpactResults } from '@/lib/impact-calculator'
-import { ImpactZone, MeteorParameters, ImpactResults } from '@/types/impact.types'
+import { ImpactZone, ImpactResults } from '@/types/impact.types'
 
 // Small adapter to map composition -> density (kg/m^3)
 const DENSITY_MAP: Record<string, number> = {

@@ -84,14 +84,8 @@ export default function MapImpactPage() {
 
 
 
-        </div> 
-      </div> */}
         </div> */}
-
-        {/* Impact Sandbox Component */}
-
       </div>
-    </div>
     </div>
   )
 }
